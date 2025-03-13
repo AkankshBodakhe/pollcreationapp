@@ -1,0 +1,20 @@
+package com.akanksh.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.AutoConfigureOrder;
+
+import com.akanksh.dao.UserDao;
+import com.akanksh.dto.UserDto;
+
+public class UserServiceImpl implements UserService{
+	
+	@Autowired
+	private UserDao userDao;
+
+	@Override
+	public UserDto loginUser(String email, String password) {
+		userDao.getUserbyEmail(email);
+		return null;
+	}
+
+}

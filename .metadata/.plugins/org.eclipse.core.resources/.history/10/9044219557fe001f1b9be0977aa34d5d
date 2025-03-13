@@ -1,0 +1,11 @@
+package com.akanksh.service;
+
+import com.akanksh.dto.ApiResponse;
+import com.akanksh.dto.UserDto;
+
+public interface UserService {
+
+	UserDto loginUser(String email, String password);
+	
+	ApiResponse registerUser(UserDto userDto);
+}

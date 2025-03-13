@@ -1,0 +1,9 @@
+package com.akanksh.exception;
+
+public class UserAlreadyExistsException {
+
+	public UserAlreadyExistsException(String message) {
+        super(message);
+	}
+	
+}

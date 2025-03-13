@@ -1,0 +1,9 @@
+package com.akanksh.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.akanksh.entity.Otp;
+
+public interface OtpRepository extends JpaRepository<Otp, Long>{
+
+}

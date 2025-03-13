@@ -1,0 +1,8 @@
+package com.akanksh.dao;
+
+import com.akanksh.entity.User;
+
+public interface UserDao {
+
+	User getUserbyEmail(String email);
+}

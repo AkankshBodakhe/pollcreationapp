@@ -1,0 +1,22 @@
+package com.akanksh.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.akanksh.entity.Otp;
+import com.akanksh.repository.OtpRepository;
+
+@Repository
+public class OtpDaoImpl implements OtpDao{
+
+	@Autowired
+	private OtpRepository otpRepository;
+	
+	
+	@Override
+	public Otp saveOtp(Otp otp) {
+		
+		return otpRepository.save(otp);
+	}
+
+}

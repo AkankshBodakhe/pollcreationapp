@@ -1,0 +1,36 @@
+package com.akanksh.service;
+
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
+import com.akanksh.dao.UserDao;
+import com.akanksh.dto.UserDto;
+import com.akanksh.entity.User;
+import com.akanksh.exception.InvalidCredentialsException;
+import com.akanksh.exception.UserNotFoundException;
+
+public class UserServiceImpl implements UserService{
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
+
+	@Override
+	public UserDto loginUser(String email, String password) {
+		Optional<User> fetchedUser = userDao.getUserbyEmail(email);
+		
+        if (fetchedUser.isEmpty() || !passwordEncoder.matches(password, fetchedUser.get().getPassword())) {
+            throw new InvalidCredentialsException("Invalid credentials. Please try again.");
+        }
+		
+		User user = fetchedUser.get();
+
+		
+		return null;
+	}
+
+}

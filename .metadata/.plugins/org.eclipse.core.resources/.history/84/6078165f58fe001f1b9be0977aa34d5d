@@ -1,0 +1,61 @@
+package com.akanksh.service;
+
+import java.util.Optional;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import com.akanksh.dao.UserDao;
+import com.akanksh.dto.ApiResponse;
+import com.akanksh.dto.LoginUserDto;
+import com.akanksh.dto.RegisterUserDto;
+import com.akanksh.entity.User;
+import com.akanksh.exception.InvalidCredentialsException;
+import com.akanksh.exception.UserAlreadyExistsException;
+
+@Service
+public class UserServiceImpl implements UserService {
+    
+    @Autowired
+    private UserDao userDao;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
+    
+    @Autowired
+    private ModelMapper mapper;
+
+    @Override
+    public LoginUserDto loginUser(String email, String password) {
+        Optional<User> optionalUser = userDao.getUserbyEmail(email);
+
+        if (optionalUser.isEmpty() || !passwordEncoder.matches(password, optionalUser.get().getPassword())) {
+            throw new InvalidCredentialsException("Invalid credentials. Please try again.");
+        }
+
+        User user = optionalUser.get();
+        LoginUserDto userDto = mapper.map(user, LoginUserDto.class);
+        
+        return userDto;
+    }
+    
+    @Override
+    public ApiResponse registerUser(RegisterUserDto registerUserDto) {
+        Optional<User> existingUser = userDao.getUserbyEmail(registerUserDto.getEmail());
+        if (existingUser.isPresent()) {
+            throw new UserAlreadyExistsException("User with email " + registerUserDto.getEmail() + " already exists.");
+        }
+
+        String encryptedPassword = passwordEncoder.encode(registerUserDto.getPassword());
+
+        User newUser = mapper.map(registerUserDto, User.class);
+
+        User savedUser = userDao.registerUser(newUser);
+
+        LoginUserDto responseDto = mapper.map(savedUser, LoginUserDto.class);
+
+        return new ApiResponse("User registered successfully!", responseDto);
+    }
+}

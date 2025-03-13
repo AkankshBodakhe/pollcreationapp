@@ -1,0 +1,11 @@
+package com.akanksh.entity;
+
+import com.akanksh.enums.OtpPurpose;
+
+public class Otp {
+	
+	private String email;
+	private Integer otp;
+	private OtpPurpose purpose;
+
+}

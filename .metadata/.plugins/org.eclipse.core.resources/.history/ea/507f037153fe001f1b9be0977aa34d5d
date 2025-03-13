@@ -1,0 +1,5 @@
+package com.akanksh;
+
+public class UserDto {
+
+}

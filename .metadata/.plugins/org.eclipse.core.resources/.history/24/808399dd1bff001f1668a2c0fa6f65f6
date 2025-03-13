@@ -1,0 +1,13 @@
+package com.akanksh.service;
+
+import com.akanksh.dto.OtpDto;
+import com.akanksh.enums.OtpPurpose;
+
+public interface OtpService {
+
+    boolean generateAndSendOtp(String email, OtpPurpose purpose);
+
+    boolean validateOtp(OtpDto otpDto);
+
+    void deleteOtp(Integer customerId);
+}
