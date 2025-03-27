@@ -1,0 +1,55 @@
+package com.akanksh.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import com.akanksh.dto.ApiResponse;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.dto.PollResponseDto;
+import com.akanksh.dto.VoteRequestDto;
+import com.akanksh.dto.VoteResponseDto;
+import com.akanksh.service.PollService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("polls")
+public class PollController {
+
+    @Autowired
+    private PollService pollService;
+
+    @PostMapping("create")
+    public ResponseEntity<ApiResponse> createPoll(@Valid @RequestBody CreatePollRequestDto createPollDto) {
+        CreatePollResponseDto responseDto = pollService.createPoll(createPollDto);
+        return ResponseEntity.status(201).body(new ApiResponse(responseDto.getMessage(), responseDto));
+    }
+
+    @PostMapping("vote")
+    public ResponseEntity<ApiResponse> vote(@RequestBody VoteRequestDto voteRequestDto) {
+        ApiResponse response = pollService.vote(voteRequestDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @PutMapping("/changeVote")
+    public ResponseEntity<ApiResponse> changeVote(@RequestBody VoteRequestDto voteRequestDto) {
+        ApiResponse response = pollService.changeVote(voteRequestDto);
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/user/{email}")
+    public ResponseEntity<List<PollResponseDto>> getPollsByUser(@PathVariable String email) {
+        List<PollResponseDto> polls = pollService.getPollsByUser(email);
+        return ResponseEntity.ok(polls);
+    }
+
+    @GetMapping("/user/voted/{email}")
+    public ResponseEntity<List<VoteResponseDto>> getVotesByUser(@PathVariable String email) {
+        List<VoteResponseDto> votes = pollService.getVotesByUser(email);
+        return ResponseEntity.ok(votes);
+    }
+}

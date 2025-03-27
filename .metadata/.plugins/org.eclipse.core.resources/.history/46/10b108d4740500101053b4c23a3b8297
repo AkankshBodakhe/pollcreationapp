@@ -1,0 +1,26 @@
+package com.akanksh.dao;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import com.akanksh.entity.PollVote;
+import com.akanksh.repository.PollVoteRepository;
+
+import java.util.Optional;
+
+@Repository
+public class PollVoteDaoImpl implements PollVoteDao {
+
+    @Autowired
+    private PollVoteRepository pollVoteRepository;
+
+    @Override
+    public void saveVote(PollVote pollVote) {
+        pollVoteRepository.save(pollVote);
+    }
+
+    @Override
+    public Optional<PollVote> findByPollIdAndVoterId(Long pollId, Long voterId) {
+        return pollVoteRepository.findByPollIdAndVoterId(pollId, voterId);
+    }
+}

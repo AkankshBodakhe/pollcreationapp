@@ -1,0 +1,10 @@
+// PollService.java
+package com.akanksh.service;
+
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import org.springframework.http.ResponseEntity;
+
+public interface PollService {
+    ResponseEntity<CreatePollResponseDto> createPoll(CreatePollRequestDto requestDto);
+}

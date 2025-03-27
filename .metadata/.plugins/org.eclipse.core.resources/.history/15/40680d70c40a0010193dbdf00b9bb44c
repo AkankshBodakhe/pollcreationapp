@@ -1,0 +1,48 @@
+// PollService.java
+package com.akanksh.service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.http.ResponseEntity;
+
+import com.akanksh.dto.CastVoteRequestDto;
+import com.akanksh.dto.CastVoteResponseDto;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.dto.PollDetailResponseDto;
+import com.akanksh.dto.PollResponseDto;
+import com.akanksh.dto.PollStatisticsResponseDto;
+import com.akanksh.dto.PollSummaryDto;
+import com.akanksh.dto.VotedPollResponseDto;
+
+public interface PollService {
+	ResponseEntity<CreatePollResponseDto> createPoll(CreatePollRequestDto requestDto);
+
+	List<PollSummaryDto> getPollByUser(String email);
+	
+    ResponseEntity<CastVoteResponseDto> castVote(CastVoteRequestDto requestDto);
+
+	ResponseEntity<?> deletePoll(Long id);
+
+	PollStatisticsResponseDto getPollStatistics(Long pollId);
+//
+//	PollDetailResponseDto getPollDetails(Long pollId);
+
+	List<PollResponseDto> getAllActivePolls();
+
+	List<VotedPollResponseDto> getVotedPolls(String email);
+
+	void stopPoll(Long pollId);
+
+	void resumePoll(Long pollId);
+
+	void updatePollExpiry(Long pollId, LocalDateTime newExpiryDate);
+
+	void changeVote(CastVoteRequestDto requestDto);
+
+	void deleteVote(Long pollId, String voterEmail);
+
+	void updatePoll(Long pollId, UpdatePollRequestDto updateRequest);
+	
+}

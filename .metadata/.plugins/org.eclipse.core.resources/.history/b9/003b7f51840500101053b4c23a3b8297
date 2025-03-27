@@ -1,0 +1,6 @@
+
+package com.akanksh.dto;
+
+public class VoteResponseDto {
+
+}

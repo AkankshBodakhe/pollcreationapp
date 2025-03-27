@@ -1,0 +1,22 @@
+package com.akanksh.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class PollOption {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String optionText;
+
+    @ManyToOne
+    @JoinColumn(name = "poll_id", nullable = false)
+    private Poll poll;
+}

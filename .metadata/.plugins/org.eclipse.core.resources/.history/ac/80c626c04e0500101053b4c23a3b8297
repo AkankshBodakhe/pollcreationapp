@@ -1,0 +1,113 @@
+package com.akanksh.service;
+
+import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.akanksh.dao.PollDao;
+import com.akanksh.dto.PollDto;
+import com.akanksh.entity.Poll;
+import com.akanksh.entity.User;
+import com.akanksh.repository.UserRepository;
+
+import lombok.RequiredArgsConstructor;
+
+@Service
+@RequiredArgsConstructor
+public class PollServiceImpl implements PollService {
+
+	@Autowired
+    private final PollDao pollDAO;
+	
+	@Autowired
+    private final UserRepository userRepository;
+
+    @Override
+    public Poll createPoll(PollDto pollDTO) {
+        User user = userRepository.findById(pollDTO.getCreatedByEmail()).orElseThrow(() -> new RuntimeException("User not found"));
+
+        Poll poll = new Poll();
+        poll.setQuestion(pollDTO.getQuestion());
+        poll.setOptions(pollDTO.getOptions());
+        poll.setAllowMultiple(pollDTO.isAllowMultiple());
+        poll.setCreatedAt(LocalDateTime.now());
+        poll.setExpiryAt(pollDTO.getExpiryAt());
+        poll.setCreatedBy(user);
+//        poll.setVotes(new ArrayList<>());
+        poll.setStatus(true);
+
+        return pollDAO.savePoll(poll);
+    }
+
+    @Override
+    public Poll votePoll(Long pollId, String userEmail, List<String> selectedOptions) {
+        Poll poll = pollDAO.getPollById(pollId);
+        if (poll == null || !poll.isStatus()) {
+            throw new RuntimeException("Poll not found or expired");
+        }
+
+        // Check if the user has already voted
+        for (String option : poll.getVotes().keySet()) {
+            if (poll.getVotes().get(option).contains(userEmail)) {
+                throw new RuntimeException("User has already voted");
+            }
+        }
+
+        // Store user votes for selected options
+        for (String option : selectedOptions) {
+            poll.getVotes().computeIfAbsent(option, k -> new ArrayList<>()).add(userEmail);
+        }
+
+        return pollDAO.savePoll(poll);
+    }
+
+
+    @Override
+    public List<Poll> getPollsVotedByUser(String userEmail) {
+        return pollDAO.getPollsVotedByUser(userEmail);
+    }
+
+    @Override
+    public Map<String, Double> getPollStatistics(Long pollId) {
+        Poll poll = pollDAO.getPollById(pollId);
+        if (poll == null) {
+            throw new RuntimeException("Poll not found");
+        }
+
+        int totalVotes = poll.getVotes().size();
+        if (totalVotes == 0) {
+            return Collections.emptyMap();
+        }
+
+        Map<String, Long> optionCounts = poll.getOptions().stream()
+                .collect(Collectors.toMap(option -> option, option -> 0L));
+
+//        for (String userEmail : poll.getVotes()) {
+//            optionCounts.put(userEmail, optionCounts.getOrDefault(userEmail, 0L) + 1);
+//        }
+
+        Map<String, Double> votePercentage = new HashMap<>();
+        for (String option : optionCounts.keySet()) {
+            votePercentage.put(option, (optionCounts.get(option) * 100.0) / totalVotes);
+        }
+
+        return votePercentage;
+    }
+    
+    @Override
+    public Map<String, List<String>> getVotesForPoll(Long pollId) {
+        Poll poll = pollDAO.getPollById(pollId);
+        if (poll == null) {
+            throw new RuntimeException("Poll not found");
+        }
+        return poll.getVotes();  // Return votes map (option -> list of users)
+    }
+
+}

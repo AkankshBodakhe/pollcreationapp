@@ -1,0 +1,66 @@
+package com.akanksh.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.akanksh.dto.ApiResponse;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.dto.PollResponseDto;
+import com.akanksh.dto.VoteRequestDto;
+import com.akanksh.exception.ResourceNotFoundException;
+import com.akanksh.service.PollService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("polls")
+public class PollController {
+
+	@Autowired
+	private PollService pollService;
+
+    @PostMapping("create")
+    public ResponseEntity<?> createPoll(@Valid @RequestBody CreatePollRequestDto createPollDto) {
+        try {
+            CreatePollResponseDto responseDto = pollService.createPoll(createPollDto);
+            ApiResponse response = new ApiResponse(responseDto.getMessage(), responseDto);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+        } catch (ResourceNotFoundException ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+    
+    @PostMapping("vote")
+    public ResponseEntity<?> vote(@RequestBody VoteRequestDto voteRequestDto) {
+        try {
+            ApiResponse response = pollService.vote(voteRequestDto);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Exception ex) {
+            return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+        }
+    }
+    
+    @PutMapping("/changeVote")
+    public ResponseEntity<ApiResponse> changeVote(@RequestBody VoteRequestDto voteRequestDto) {
+        ApiResponse response = pollService.changeVote(voteRequestDto);
+        return ResponseEntity.ok(response);
+    }
+    
+    @GetMapping("/user/{email}")
+    public List<PollResponseDto> getPollsByUser(@PathVariable String email) {
+        return pollService.getPollsByUser(email);
+    }
+    
+}
+

@@ -1,0 +1,127 @@
+package com.akanksh.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.akanksh.dao.PollDao;
+import com.akanksh.dao.PollOptionDao;
+import com.akanksh.dao.PollVoteDao;
+import com.akanksh.dao.UserDao;
+import com.akanksh.dto.ApiResponse;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.dto.VoteRequestDto;
+import com.akanksh.entity.Poll;
+import com.akanksh.entity.PollOption;
+import com.akanksh.entity.PollVote;
+import com.akanksh.entity.User;
+import com.akanksh.exception.ResourceNotFoundException;
+
+@Service
+public class PollServiceImpl implements PollService {
+	
+    @Autowired
+    private PollVoteDao pollVoteDao;
+
+    @Autowired
+    private PollDao pollDao;
+
+    @Autowired
+    private PollOptionDao pollOptionDao;
+
+    @Autowired
+    private UserDao userDao;
+
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public CreatePollResponseDto createPoll(CreatePollRequestDto requestDto) {
+        // Validate User using Email
+        User user = userDao.getUserbyEmail(requestDto.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + requestDto.getEmail()));
+
+        // Map DTO to Entity
+        Poll poll = new Poll();
+        poll.setQuestion(requestDto.getQuestion());
+        poll.setAllowMultipleSelect(requestDto.isAllowMultiple());
+        poll.setExpiryDate(requestDto.getExpiryDateTime());
+        poll.setCreatedBy(user);
+        poll.setCreatedAt(requestDto.getCreatedAt());
+        poll.setActive(true);
+
+        // Save Poll
+        Poll savedPoll = pollDao.createPoll(poll);
+
+        // Save Poll Options using PollOptionDao
+        List<PollOption> pollOptions = requestDto.getOptions().stream().map(option -> {
+            PollOption pollOption = new PollOption();
+            pollOption.setOptionText(option);
+            pollOption.setPoll(savedPoll);
+            return pollOption;
+        }).collect(Collectors.toList());
+
+        pollOptionDao.saveAll(pollOptions);
+
+        return new CreatePollResponseDto(savedPoll.getId(), "Poll created successfully!");
+    }
+    
+    @Override
+    public ApiResponse vote(VoteRequestDto voteRequestDto) {
+        // Validate Poll
+        Poll poll = pollDao.findById(voteRequestDto.getPollId())
+                .orElseThrow(() -> new ResourceNotFoundException("Poll not found with ID: " + voteRequestDto.getPollId()));
+
+        // Validate Option
+        PollOption option = pollOptionDao.findById(voteRequestDto.getOptionId())
+                .orElseThrow(() -> new ResourceNotFoundException("Option not found with ID: " + voteRequestDto.getOptionId()));
+
+        // Validate User
+        User voter = userDao.getUserbyEmail(voteRequestDto.getVoterEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + voteRequestDto.getVoterEmail()));
+
+        // Check if user already voted
+        if (pollVoteDao.findByPollIdAndVoterEmail(poll.getId(), voter.getEmail()).isPresent()) {
+            throw new IllegalStateException("User has already voted on this poll.");
+        }
+
+        // Save the vote
+        PollVote vote = new PollVote();
+        vote.setPoll(poll);
+        vote.setSelectedOption(option);
+        vote.setVoter(voter);
+        pollVoteDao.saveVote(vote);
+
+        return new ApiResponse("Vote cast successfully", null);
+    }
+    
+    @Override
+    public ApiResponse changeVote(VoteRequestDto voteRequestDto) {
+        // Validate Poll
+        Poll poll = pollDao.findById(voteRequestDto.getPollId())
+                .orElseThrow(() -> new ResourceNotFoundException("Poll not found with ID: " + voteRequestDto.getPollId()));
+
+        // Validate Option
+        PollOption option = pollOptionDao.findById(voteRequestDto.getOptionId())
+                .orElseThrow(() -> new ResourceNotFoundException("Option not found with ID: " + voteRequestDto.getOptionId()));
+
+        // Validate User
+        User voter = userDao.getUserbyEmail(voteRequestDto.getVoterEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + voteRequestDto.getVoterEmail()));
+
+        // Check if user has voted
+        PollVote existingVote = pollVoteDao.findByPollIdAndVoterEmail(poll.getId(), voter.getEmail())
+                .orElseThrow(() -> new IllegalStateException("User has not voted on this poll."));
+
+        // Update the vote
+        existingVote.setSelectedOption(option);
+        pollVoteDao.saveVote(existingVote);
+
+        return new ApiResponse("Vote changed successfully", null);
+    }
+}

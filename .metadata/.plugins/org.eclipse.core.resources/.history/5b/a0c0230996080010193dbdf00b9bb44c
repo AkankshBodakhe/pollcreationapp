@@ -1,0 +1,66 @@
+package com.akanksh.service;
+
+import com.akanksh.dao.PollDao;
+import com.akanksh.dao.PollOptionDao;
+import com.akanksh.dao.UserDao;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.entity.Poll;
+import com.akanksh.entity.PollOption;
+import com.akanksh.entity.User;
+import com.akanksh.exception.ResourceNotFoundException;
+import com.akanksh.service.PollService;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class PollServiceImpl implements PollService {
+
+    @Autowired
+    private PollDao pollDao;
+
+    @Autowired
+    private PollOptionDao pollOptionDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public ResponseEntity<CreatePollResponseDto> createPoll(CreatePollRequestDto requestDto) {
+        try {
+            User user = userDao.getUserbyEmail(requestDto.getEmail())
+                    .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + requestDto.getEmail()));
+
+            Poll poll = modelMapper.map(requestDto, Poll.class);
+            poll.setCreatedBy(user);
+            poll.setActive(true);
+
+            Poll savedPoll = pollDao.createPoll(poll);
+
+            List<PollOption> pollOptions = requestDto.getOptions().stream().map(option -> {
+                PollOption pollOption = new PollOption();
+                pollOption.setOptionText(option);
+                pollOption.setPoll(savedPoll);
+                return pollOption;
+            }).collect(Collectors.toList());
+
+            pollOptionDao.saveAll(pollOptions);
+
+            CreatePollResponseDto responseDto = new CreatePollResponseDto(savedPoll.getId(), "Poll created successfully!");
+            return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
+//        } catch (ResourceNotFoundException ex) {
+//            return new ResponseEntity<>(new CreatePollResponseDto(null, ex.getMessage()), HttpStatus.NOT_FOUND);
+//        } catch (Exception ex) {
+//            return new ResponseEntity<>(new CreatePollResponseDto(null, "An unexpected error occurred: " + ex.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+//        }
+    }
+}

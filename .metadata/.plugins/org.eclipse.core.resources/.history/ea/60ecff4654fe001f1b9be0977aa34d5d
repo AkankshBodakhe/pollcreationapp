@@ -1,5 +1,0 @@
-package com.akanksh.exception;
-
-public class UserNotFoundException {
-
-}

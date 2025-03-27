@@ -1,0 +1,5 @@
+package com.akanksh.entity;
+
+public class PollVote {
+
+}

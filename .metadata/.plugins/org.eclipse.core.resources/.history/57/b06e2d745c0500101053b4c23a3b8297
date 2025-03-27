@@ -1,0 +1,5 @@
+package com.akanksh.repository;
+
+public interface PollVoteRepository {
+
+}

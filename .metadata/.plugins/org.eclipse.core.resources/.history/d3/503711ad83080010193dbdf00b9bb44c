@@ -1,0 +1,28 @@
+package com.akanksh.entity;
+
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class PollVote {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "poll_id", nullable = false)
+    private Poll poll;
+
+    @ManyToOne
+    @JoinColumn(name = "option_id", nullable = false)
+    private PollOption selectedOption;
+
+    @ManyToOne
+    @JoinColumn(name = "voter_email", referencedColumnName = "email", nullable = false)
+    private User voter;
+}

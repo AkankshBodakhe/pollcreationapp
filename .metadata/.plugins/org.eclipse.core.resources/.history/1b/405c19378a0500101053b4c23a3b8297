@@ -1,0 +1,177 @@
+package com.akanksh.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.akanksh.dao.PollDao;
+import com.akanksh.dao.PollOptionDao;
+import com.akanksh.dao.PollVoteDao;
+import com.akanksh.dao.UserDao;
+import com.akanksh.dto.ApiResponse;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.dto.PollResponseDto;
+import com.akanksh.dto.VoteRequestDto;
+import com.akanksh.dto.VoteResponseDto;
+import com.akanksh.entity.Poll;
+import com.akanksh.entity.PollOption;
+import com.akanksh.entity.PollVote;
+import com.akanksh.entity.User;
+import com.akanksh.exception.ResourceNotFoundException;
+
+@Service
+public class PollServiceImpl implements PollService {
+	
+    @Autowired
+    private PollVoteDao pollVoteDao;
+
+    @Autowired
+    private PollDao pollDao;
+
+    @Autowired
+    private PollOptionDao pollOptionDao;
+
+    @Autowired
+    private UserDao userDao;
+
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public CreatePollResponseDto createPoll(CreatePollRequestDto requestDto) {
+        // Validate User using Email
+        User user = userDao.getUserbyEmail(requestDto.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + requestDto.getEmail()));
+
+        // Map DTO to Entity
+        Poll poll = new Poll();
+        poll.setQuestion(requestDto.getQuestion());
+        poll.setAllowMultipleSelect(requestDto.isAllowMultiple());
+        poll.setExpiryDate(requestDto.getExpiryDateTime());
+        poll.setCreatedBy(user);
+        poll.setCreatedAt(requestDto.getCreatedAt());
+        poll.setActive(true);
+
+        // Save Poll
+        Poll savedPoll = pollDao.createPoll(poll);
+
+        // Save Poll Options using PollOptionDao
+        List<PollOption> pollOptions = requestDto.getOptions().stream().map(option -> {
+            PollOption pollOption = new PollOption();
+            pollOption.setOptionText(option);
+            pollOption.setPoll(savedPoll);
+            return pollOption;
+        }).collect(Collectors.toList());
+
+        pollOptionDao.saveAll(pollOptions);
+
+        return new CreatePollResponseDto(savedPoll.getId(), "Poll created successfully!");
+    }
+    
+    @Override
+    public ApiResponse vote(VoteRequestDto voteRequestDto) {
+        // Validate Poll
+        Poll poll = pollDao.findById(voteRequestDto.getPollId())
+                .orElseThrow(() -> new ResourceNotFoundException("Poll not found with ID: " + voteRequestDto.getPollId()));
+
+        // Validate Option
+        PollOption option = pollOptionDao.findById(voteRequestDto.getOptionId())
+                .orElseThrow(() -> new ResourceNotFoundException("Option not found with ID: " + voteRequestDto.getOptionId()));
+
+        // Validate User
+        User voter = userDao.getUserbyEmail(voteRequestDto.getVoterEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + voteRequestDto.getVoterEmail()));
+
+        // Check if user already voted
+        if (pollVoteDao.findByPollIdAndVoterEmail(poll.getId(), voter.getEmail()).isPresent()) {
+            throw new IllegalStateException("User has already voted on this poll.");
+        }
+
+        // Save the vote
+        PollVote vote = new PollVote();
+        vote.setPoll(poll);
+        vote.setSelectedOption(option);
+        vote.setVoter(voter);
+        pollVoteDao.saveVote(vote);
+
+        return new ApiResponse("Vote cast successfully", null);
+    }
+    
+    @Override
+    public ApiResponse changeVote(VoteRequestDto voteRequestDto) {
+        if (pollDao.findById(voteRequestDto.getPollId()).isEmpty()) {
+            throw new ResourceNotFoundException("Poll not found with ID: " + voteRequestDto.getPollId());
+        }
+
+        if (pollOptionDao.findById(voteRequestDto.getOptionId()).isEmpty()) {
+            throw new ResourceNotFoundException("Option not found with ID: " + voteRequestDto.getOptionId());
+        }
+
+        User voter = userDao.getUserbyEmail(voteRequestDto.getVoterEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + voteRequestDto.getVoterEmail()));
+
+        PollVote existingVote = pollVoteDao.findByPollIdAndVoterEmail(voteRequestDto.getPollId(), voter.getEmail())
+                .orElseThrow(() -> new IllegalStateException("User has not voted on this poll."));
+
+        if (existingVote.getSelectedOption().getId().equals(voteRequestDto.getOptionId())) {
+            throw new IllegalStateException("You cannot change your vote to the same option.");
+        }
+
+        PollOption newOption = pollOptionDao.findById(voteRequestDto.getOptionId()).get();
+        existingVote.setSelectedOption(newOption);
+        pollVoteDao.saveVote(existingVote);
+
+        return new ApiResponse("Vote changed successfully", null);
+    }
+    
+    @Override
+    public List<PollResponseDto> getPollsByUser(String email) {
+        User user = userDao.getUserbyEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+
+        List<Poll> polls = pollDao.findByCreatedBy(user);
+
+        return polls.stream().map(poll -> modelMapper.map(poll, PollResponseDto.class)).collect(Collectors.toList());
+    }
+    
+    @Override
+    public List<VoteResponseDto> getVotesByUser(String email) {
+        User user = userDao.getUserbyEmail(email)
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+
+        List<PollVote> votes = pollVoteDao.findByVoter(user);
+
+        return votes.stream().map(vote -> {
+            List<String> pollOptions = pollOptionDao.findByPollId(vote.getPoll().getId())
+                    .stream().map(PollOption::getOptionText).collect(Collectors.toList());
+            return new VoteResponseDto(
+                    vote.getPoll().getId(),
+                    vote.getPoll().getQuestion(),
+                    vote.getSelectedOption().getId(),
+                    vote.getSelectedOption().getOptionText(),
+                    vote.getPoll().getCreatedBy().getEmail(),
+                    vote.getPoll().getCreatedBy().getFirstName(),
+                    pollOptions
+            );
+        }).collect(Collectors.toList());
+    }
+    
+    public void printVotesByUser(String email) {
+        List<VoteResponseDto> votes = getVotesByUser(email);
+        votes.forEach(vote -> {
+            System.out.println("Poll ID: " + vote.getPollId());
+            System.out.println("Question: " + vote.getQuestion());
+            System.out.println("Selected Option ID: " + vote.getSelectedOptionId());
+            System.out.println("Selected Option Text: " + vote.getSelectedOptionText());
+            System.out.println("Created By: " + vote.getCreatedByEmail());
+            System.out.println("Created By First Name: " + vote.getCreatedByUsername());
+            System.out.println("Options: " + String.join(", ", vote.getOptions()));
+            System.out.println("--------------------------------------");
+        });
+    }
+}

@@ -1,0 +1,108 @@
+package com.akanksh.controller;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.akanksh.dto.CastVoteRequestDto;
+import com.akanksh.dto.CastVoteResponseDto;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.dto.PollResponseDto;
+import com.akanksh.dto.PollStatisticsResponseDto;
+import com.akanksh.dto.PollSummaryDto;
+import com.akanksh.dto.VotedPollResponseDto;
+import com.akanksh.service.PollService;
+
+@RestController
+@RequestMapping("/polls")
+@CrossOrigin
+public class PollController {
+
+	@Autowired
+	private PollService pollService;
+
+	@PostMapping("/create")
+	public ResponseEntity<CreatePollResponseDto> createPoll(@RequestBody CreatePollRequestDto requestDto) {
+		System.out.println("Into Controller with data " + requestDto);
+		return pollService.createPoll(requestDto);
+	}
+
+	@GetMapping("/user")
+	public ResponseEntity<List<PollSummaryDto>> getPollsByUser(@RequestParam String email) {
+		List<PollSummaryDto> pollSummaries = pollService.getPollByUser(email);
+		return ResponseEntity.ok(pollSummaries);
+	}
+
+	@GetMapping("/voted")
+	public List<VotedPollResponseDto> getVotedPolls(@RequestParam String email) {
+		return pollService.getVotedPolls(email);
+	}
+
+	@PostMapping("/vote")
+	public ResponseEntity<CastVoteResponseDto> castVote(@RequestBody CastVoteRequestDto requestDto) {
+		return pollService.castVote(requestDto);
+	}
+
+	@DeleteMapping("/delete")
+	public ResponseEntity<?> deletePoll(@RequestParam Long id) {
+		return pollService.deletePoll(id);
+	}
+
+	@GetMapping("/analysis")
+	public ResponseEntity<PollStatisticsResponseDto> getPollStatistics(@RequestParam Long pollId) {
+		return ResponseEntity.ok(pollService.getPollStatistics(pollId));
+	}
+
+	@PutMapping("/changeVote")
+	public ResponseEntity<String> changeVote(@RequestBody CastVoteRequestDto requestDto) {
+		pollService.changeVote(requestDto);
+		return ResponseEntity.ok("Vote changed successfully.");
+	}
+
+	@GetMapping("/active")
+	public List<PollResponseDto> getAllActivePolls() {
+		return pollService.getAllActivePolls();
+	}
+
+	@PutMapping("stop/{pollId}")
+	public ResponseEntity<String> stopPoll(@PathVariable Long pollId) {
+		pollService.stopPoll(pollId);
+		return ResponseEntity.ok("Poll with ID " + pollId + " has been stopped.");
+	}
+
+	@PutMapping("resume/{pollId}")
+	public ResponseEntity<String> resumePoll(@PathVariable Long pollId) {
+		pollService.resumePoll(pollId);
+		return ResponseEntity.ok("Poll with ID " + pollId + " has been resumed.");
+	}
+
+	@PutMapping("/expiry/{pollId}")
+	public ResponseEntity<String> updatePollExpiry(@PathVariable Long pollId,
+			@RequestParam LocalDateTime newExpiryDate) {
+		pollService.updatePollExpiry(pollId, newExpiryDate);
+		return ResponseEntity.ok("Expiry date updated successfully for Poll ID: " + pollId);
+	}
+	
+	@DeleteMapping("/deleteVote")
+    public ResponseEntity<String> deleteVote(@RequestParam Long pollId, @RequestParam String email) {
+        pollService.deleteVote(pollId, voterEmail);
+        return ResponseEntity.ok("Vote deleted successfully.");
+    }
+//    @GetMapping("/details")
+//    public ResponseEntity<PollDetailResponseDto> getPollDetails(@RequestParam Long pollId) {
+//        return ResponseEntity.ok(pollService.getPollDetails(pollId));
+//    }
+}

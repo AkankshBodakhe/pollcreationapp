@@ -1,8 +1,0 @@
-package com.akanksh.dao;
-
-import com.akanksh.entity.Otp;
-
-public interface OtpDao {
-
-	Otp saveOtp(Otp otp);
-}

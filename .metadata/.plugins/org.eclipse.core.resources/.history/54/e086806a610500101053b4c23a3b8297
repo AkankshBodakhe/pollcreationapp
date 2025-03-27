@@ -1,0 +1,63 @@
+package com.akanksh.service;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.akanksh.dao.PollDao;
+import com.akanksh.dao.UserDao;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.entity.Poll;
+import com.akanksh.entity.PollOption;
+import com.akanksh.entity.User;
+import com.akanksh.exception.ResourceNotFoundException;
+import com.akanksh.repository.PollOptionRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+public class PollServiceImpl implements PollService {
+
+    @Autowired
+    private PollDao pollDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private PollOptionRepository pollOptionRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public CreatePollResponseDto createPoll(CreatePollRequestDto requestDto) {
+        // Validate User using Email
+        User user = userDao.getUserbyEmail(requestDto.getCreatedByEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + requestDto.getCreatedByEmail()));
+
+        // Map DTO to Entity
+        Poll poll = new Poll();
+        poll.setQuestion(requestDto.getQuestion());
+        poll.setAllowMultipleSelect(requestDto.isAllowMultipleSelect());
+        poll.setExpiryDate(requestDto.getExpiryDate());
+        poll.setCreatedBy(user);
+        poll.setActive(true);
+
+        // Save Poll
+        Poll savedPoll = pollDao.createPoll(poll);
+
+        // Save Poll Options
+        List<PollOption> pollOptions = requestDto.getOptions().stream().map(option -> {
+            PollOption pollOption = new PollOption();
+            pollOption.setOptionText(option);
+            pollOption.setPoll(savedPoll);
+            return pollOption;
+        }).collect(Collectors.toList());
+
+        pollOptionRepository.saveAll(pollOptions);
+
+        return new CreatePollResponseDto(savedPoll.getId(), "Poll created successfully!");
+    }
+}

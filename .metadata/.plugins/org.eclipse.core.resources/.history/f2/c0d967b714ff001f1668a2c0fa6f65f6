@@ -1,5 +1,0 @@
-package com.akanksh.enums;
-
-public enum OtpPurpose {
-
-}

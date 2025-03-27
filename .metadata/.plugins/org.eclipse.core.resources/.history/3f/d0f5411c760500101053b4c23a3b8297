@@ -1,0 +1,7 @@
+package com.akanksh.dao;
+
+import com.akanksh.entity.Poll;
+
+public interface PollDao {
+    Poll createPoll(Poll poll);
+}

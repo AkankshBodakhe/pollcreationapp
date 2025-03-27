@@ -1,0 +1,22 @@
+package com.akanksh.service;
+
+import java.util.List;
+
+import com.akanksh.dto.ApiResponse;
+import com.akanksh.dto.CreatePollRequestDto;
+import com.akanksh.dto.CreatePollResponseDto;
+import com.akanksh.dto.PollResponseDto;
+import com.akanksh.dto.VoteRequestDto;
+import com.akanksh.dto.VoteResponseDto;
+
+public interface PollService {
+    CreatePollResponseDto createPoll(CreatePollRequestDto requestDto);
+    
+    ApiResponse vote(VoteRequestDto voteRequestDto);
+    
+    ApiResponse changeVote(VoteRequestDto voteRequestDto);
+    
+    List<PollResponseDto> getPollsByUser(String email);
+    
+    List<VoteResponseDto> getVotesByUser(String email);
+}

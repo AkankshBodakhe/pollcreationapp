@@ -16,7 +16,7 @@ public class UserDaoImpl implements UserDao {
 
 	@Override
 	public Optional<User> getUserbyEmail(String email) {
-		Optional<User> optionalUser = userRepository.findById(email);
+		Optional<User> optionalUser = userRepository.findById(email); 
 		return optionalUser;
 	}
 

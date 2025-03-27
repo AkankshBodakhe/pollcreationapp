@@ -1,0 +1,5 @@
+package com.akanksh.dao;
+
+public interface PollDao {
+
+}

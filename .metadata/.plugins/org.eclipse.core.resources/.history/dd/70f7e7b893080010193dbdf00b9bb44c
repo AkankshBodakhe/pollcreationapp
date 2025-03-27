@@ -1,0 +1,18 @@
+package com.akanksh.repository;
+
+import com.akanksh.entity.Poll;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
+
+public interface PollRepository extends JpaRepository<Poll, Long> {
+
+    List<Poll> findByCreatedBy_Email(String email); // Find polls by creator's email
+
+    Optional<Poll> findByIdAndCreatedBy_Email(Long pollId, String email); // Find poll by ID and creator's email
+
+    List<Poll> findByIsActiveTrue(); // Find all active polls
+
+    List<Poll> findByExpiryDateBeforeAndIsActiveTrue(java.time.LocalDateTime now); // Find expired active polls
+
+}

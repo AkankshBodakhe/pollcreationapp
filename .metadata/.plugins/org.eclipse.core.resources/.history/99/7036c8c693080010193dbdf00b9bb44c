@@ -1,0 +1,17 @@
+package com.akanksh.repository;
+
+import com.akanksh.entity.PollVote;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import java.util.Optional;
+
+public interface PollVoteRepository extends JpaRepository<PollVote, Long> {
+
+    List<PollVote> findByPollId(Long pollId);
+
+    List<PollVote> findByVoter_Email(String email); // Find votes by voter's email
+
+    Optional<PollVote> findByPollIdAndVoter_Email(Long pollId, String email); // Find specific vote by poll ID and voter's email
+
+    long countByPollIdAndSelectedOptionId(Long pollId, Long optionId); // Count votes for a specific option in a poll
+}
