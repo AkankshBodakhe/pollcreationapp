@@ -1,0 +1,5 @@
+package com.akanksh.controller;
+
+public class EmailController {
+
+}

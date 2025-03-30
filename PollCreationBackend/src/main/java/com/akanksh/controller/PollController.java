@@ -74,8 +74,8 @@ public class PollController {
 	}
 
 	@GetMapping("/active")
-	public List<PollResponseDto> getAllActivePolls() {
-		return pollService.getAllActivePolls();
+	public List<PollResponseDto> getAllActivePolls(@RequestParam  String email) {
+		return pollService.getAllActivePolls(email);
 	}
 
 	@PutMapping("stop/{pollId}")

@@ -1,0 +1,17 @@
+package com.akanksh.repository;
+
+import com.akanksh.entity.Poll;
+import com.akanksh.entity.Users;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+
+public interface PollRepository extends JpaRepository<Poll, Long> {
+
+    List<Poll> findByCreatedBy(Users user);
+    
+    List<Poll> findByCreatedByEmail(String email);
+    
+    List<Poll> findByIsActiveTrue();
+
+
+}

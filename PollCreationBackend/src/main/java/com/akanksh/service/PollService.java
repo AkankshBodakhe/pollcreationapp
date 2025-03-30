@@ -29,7 +29,7 @@ public interface PollService {
 //
 //	PollDetailResponseDto getPollDetails(Long pollId);
 
-	List<PollResponseDto> getAllActivePolls();
+	List<PollResponseDto> getAllActivePolls(String email);
 
 	List<VotedPollResponseDto> getVotedPolls(String email);
 

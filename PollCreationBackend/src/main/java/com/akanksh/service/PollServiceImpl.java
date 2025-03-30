@@ -401,28 +401,32 @@ public class PollServiceImpl implements PollService {
     }
 
     @Override
-    public List<PollResponseDto> getAllActivePolls() {
+    public List<PollResponseDto> getAllActivePolls(String email) {
         List<Poll> activePolls = pollDao.findByIsActiveTrue();
 
-        return activePolls.stream().map(poll -> {
-            Long totalVotes = poll.getVotes() != null ? (long) poll.getVotes().size() : 0;
+        return activePolls.stream()
+                .filter(poll -> !poll.getCreatedBy().getEmail().equals(email)) // Exclude polls created by the user
+                .map(poll -> {
+                    Long totalVotes = poll.getVotes() != null ? (long) poll.getVotes().size() : 0;
 
-            // Map PollOptions to OptionDto
-            List<OptionDto> optionDtos = poll.getOptions().stream()
-                    .map(option -> new OptionDto(option.getId(), option.getOptionText()))
-                    .collect(Collectors.toList());
+                    // Map PollOptions to OptionDto
+                    List<OptionDto> optionDtos = poll.getOptions().stream()
+                            .map(option -> new OptionDto(option.getId(), option.getOptionText()))
+                            .collect(Collectors.toList());
 
-            return new PollResponseDto(
-                    poll.getId(),
-                    poll.getQuestion(),
-                    poll.getCreatedBy().getEmail(),
-                    poll.getExpiryDate(),
-                    totalVotes,
-                    poll.isAllowMultipleSelect(),
-                    optionDtos
-            );
-        }).collect(Collectors.toList());
+                    return new PollResponseDto(
+                            poll.getId(),
+                            poll.getQuestion(),
+                            poll.getCreatedBy().getEmail(),
+                            poll.getExpiryDate(),
+                            totalVotes,
+                            poll.isAllowMultipleSelect(),
+                            optionDtos
+                    );
+                })
+                .collect(Collectors.toList());
     }
+
 
     @Transactional
     @Override
@@ -433,9 +437,9 @@ public class PollServiceImpl implements PollService {
         Poll poll = pollDao.findById(pollId)
                 .orElseThrow(() -> new ResourceNotFoundException("Poll not found with ID: " + pollId));
 
-        if (!poll.isActive()) {
-            throw new IllegalStateException("Cannot delete vote. Poll is not active.");
-        }
+//        if (!poll.isActive()) {
+//            throw new IllegalStateException("Cannot delete vote. Poll is not active.");
+//        }
 
         // Delete vote
         pollVoteDao.deleteVotesByPollAndVoter(poll, user);

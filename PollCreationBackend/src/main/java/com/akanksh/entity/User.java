@@ -1,5 +1,7 @@
 package com.akanksh.entity;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
@@ -22,5 +24,6 @@ public class User {
 	private String firstName;
 	
 	private String lastName;
+	
 
 }
