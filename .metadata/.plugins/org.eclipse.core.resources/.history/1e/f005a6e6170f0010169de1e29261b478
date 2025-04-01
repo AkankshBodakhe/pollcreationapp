@@ -114,9 +114,6 @@ public class PollServiceImpl implements PollService {
 	    // Fetch polls by user
 	    List<Poll> polls = pollDao.findPollsByCreatedByEmail(email);
 
-	    // Sort polls by createdAt in descending order
-	    polls.sort(Comparator.comparing(Poll::getCreatedAt).reversed());
-
 	    return polls.stream().map(poll -> {
 	        int totalVotes = poll.getVotes() != null ? poll.getVotes().size() : 0;
 	        String status = poll.isActive() ? "active" : "inactive";
@@ -139,7 +136,6 @@ public class PollServiceImpl implements PollService {
 	        );
 	    }).collect(Collectors.toList());
 	}
-
     
     
     @Override

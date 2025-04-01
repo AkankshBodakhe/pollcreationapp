@@ -1,8 +1,0 @@
-package com.akanksh.service;
-
-import com.akanksh.dto.CreatePollRequestDto;
-import com.akanksh.dto.CreatePollResponseDto;
-
-public interface PollService {
-    CreatePollResponseDto createPoll(CreatePollRequestDto requestDto);
-}

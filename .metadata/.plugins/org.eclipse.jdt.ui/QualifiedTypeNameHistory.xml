@@ -17,4 +17,5 @@
     <fullyQualifiedTypeName name="com.akanksh.repository.PollRepository"/>
     <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
     <fullyQualifiedTypeName name="com.akanksh.dao.PollDao"/>
+    <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.CrossOrigin"/>
 </qualifiedTypeNameHistroy>

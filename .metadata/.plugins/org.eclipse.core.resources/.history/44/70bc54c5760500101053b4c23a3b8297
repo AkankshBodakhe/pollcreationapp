@@ -1,8 +1,0 @@
-package com.akanksh.dao;
-
-import com.akanksh.entity.PollOption;
-import java.util.Optional;
-
-public interface PollOptionDao {
-    Optional<PollOption> findById(Long id);
-}

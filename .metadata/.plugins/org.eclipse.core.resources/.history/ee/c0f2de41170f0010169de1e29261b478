@@ -114,9 +114,6 @@ public class PollServiceImpl implements PollService {
 	    // Fetch polls by user
 	    List<Poll> polls = pollDao.findPollsByCreatedByEmail(email);
 
-	    // Sort polls by createdAt in descending order
-	    polls.sort(Comparator.comparing(Poll::getCreatedAt).reversed());
-
 	    return polls.stream().map(poll -> {
 	        int totalVotes = poll.getVotes() != null ? poll.getVotes().size() : 0;
 	        String status = poll.isActive() ? "active" : "inactive";
@@ -139,7 +136,6 @@ public class PollServiceImpl implements PollService {
 	        );
 	    }).collect(Collectors.toList());
 	}
-
     
     
     @Override
@@ -218,35 +214,39 @@ public class PollServiceImpl implements PollService {
         Map<Poll, List<PollVote>> pollVotesMap = votes.stream()
                 .collect(Collectors.groupingBy(PollVote::getPoll));
 
-        // Sort polls by createdAt in descending order
-        return pollVotesMap.entrySet().stream()
-                .sorted(Comparator.comparing(entry -> entry.getKey().getCreatedAt(), Comparator.reverseOrder()))
-                .map(entry -> {
-                    Poll poll = entry.getKey();
-                    List<PollVote> userVotes = entry.getValue();
+        // Map to DTO
+        return pollVotesMap.entrySet().stream().map(entry -> {
+            Poll poll = entry.getKey();
+            List<PollVote> userVotes = entry.getValue();
 
-                    // Convert options to OptionDto
-                    List<OptionDto> options = poll.getOptions().stream()
-                            .map(opt -> new OptionDto(opt.getId(), opt.getOptionText()))
-                            .collect(Collectors.toList());
+            // Convert options to OptionDto
+            List<OptionDto> options = poll.getOptions().stream()
+                    .map(opt -> new OptionDto(opt.getId(), opt.getOptionText()))
+                    .collect(Collectors.toList());
 
-                    // Get user's voted options with both ID and Text
-                    List<OptionDto> votedOptions = userVotes.stream()
-                            .map(v -> new OptionDto(v.getSelectedOption().getId(), v.getSelectedOption().getOptionText()))
-                            .collect(Collectors.toList());
+            // Get user's voted options with both ID and Text
+            List<OptionDto> votedOptions = userVotes.stream()
+                    .map(v -> new OptionDto(v.getSelectedOption().getId(), v.getSelectedOption().getOptionText()))
+                    .collect(Collectors.toList());
 
-                    return new VotedPollResponseDto(
-                            poll.getId(),
-                            poll.getQuestion(),
-                            options,
-                            votedOptions,
-                            (long) poll.getVotes().size(),
-                            poll.getCreatedBy().getEmail(),
-                            poll.getExpiryDate()
-                    );
-                }).collect(Collectors.toList());
+//            // Determine the earliest vote date
+//            LocalDateTime votedDate = userVotes.stream()
+//                    .map(PollVote::getVotedDate)
+//                    .min(LocalDateTime::compareTo)
+//                    .orElse(null);
+
+            return new VotedPollResponseDto(
+                    poll.getId(),
+                    poll.getQuestion(),
+                    options,
+                    votedOptions,
+                    (long) poll.getVotes().size(),
+                    poll.getCreatedBy().getEmail(),
+                    poll.getExpiryDate()
+//                    votedDate
+            );
+        }).collect(Collectors.toList());
     }
-
 
     @Transactional
     @Override

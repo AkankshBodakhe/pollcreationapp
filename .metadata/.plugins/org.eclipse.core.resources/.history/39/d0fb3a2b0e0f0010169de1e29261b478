@@ -2,7 +2,6 @@ package com.akanksh.service;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -114,9 +113,6 @@ public class PollServiceImpl implements PollService {
 	    // Fetch polls by user
 	    List<Poll> polls = pollDao.findPollsByCreatedByEmail(email);
 
-	    // Sort polls by createdAt in descending order
-	    polls.sort(Comparator.comparing(Poll::getCreatedAt).reversed());
-
 	    return polls.stream().map(poll -> {
 	        int totalVotes = poll.getVotes() != null ? poll.getVotes().size() : 0;
 	        String status = poll.isActive() ? "active" : "inactive";
@@ -139,7 +135,6 @@ public class PollServiceImpl implements PollService {
 	        );
 	    }).collect(Collectors.toList());
 	}
-
     
     
     @Override
@@ -218,35 +213,39 @@ public class PollServiceImpl implements PollService {
         Map<Poll, List<PollVote>> pollVotesMap = votes.stream()
                 .collect(Collectors.groupingBy(PollVote::getPoll));
 
-        // Sort polls by createdAt in descending order
-        return pollVotesMap.entrySet().stream()
-                .sorted(Comparator.comparing(entry -> entry.getKey().getCreatedAt(), Comparator.reverseOrder()))
-                .map(entry -> {
-                    Poll poll = entry.getKey();
-                    List<PollVote> userVotes = entry.getValue();
+        // Map to DTO
+        return pollVotesMap.entrySet().stream().map(entry -> {
+            Poll poll = entry.getKey();
+            List<PollVote> userVotes = entry.getValue();
 
-                    // Convert options to OptionDto
-                    List<OptionDto> options = poll.getOptions().stream()
-                            .map(opt -> new OptionDto(opt.getId(), opt.getOptionText()))
-                            .collect(Collectors.toList());
+            // Convert options to OptionDto
+            List<OptionDto> options = poll.getOptions().stream()
+                    .map(opt -> new OptionDto(opt.getId(), opt.getOptionText()))
+                    .collect(Collectors.toList());
 
-                    // Get user's voted options with both ID and Text
-                    List<OptionDto> votedOptions = userVotes.stream()
-                            .map(v -> new OptionDto(v.getSelectedOption().getId(), v.getSelectedOption().getOptionText()))
-                            .collect(Collectors.toList());
+            // Get user's voted options with both ID and Text
+            List<OptionDto> votedOptions = userVotes.stream()
+                    .map(v -> new OptionDto(v.getSelectedOption().getId(), v.getSelectedOption().getOptionText()))
+                    .collect(Collectors.toList());
 
-                    return new VotedPollResponseDto(
-                            poll.getId(),
-                            poll.getQuestion(),
-                            options,
-                            votedOptions,
-                            (long) poll.getVotes().size(),
-                            poll.getCreatedBy().getEmail(),
-                            poll.getExpiryDate()
-                    );
-                }).collect(Collectors.toList());
+//            // Determine the earliest vote date
+//            LocalDateTime votedDate = userVotes.stream()
+//                    .map(PollVote::getVotedDate)
+//                    .min(LocalDateTime::compareTo)
+//                    .orElse(null);
+
+            return new VotedPollResponseDto(
+                    poll.getId(),
+                    poll.getQuestion(),
+                    options,
+                    votedOptions,
+                    (long) poll.getVotes().size(),
+                    poll.getCreatedBy().getEmail(),
+                    poll.getExpiryDate()
+//                    votedDate
+            );
+        }).collect(Collectors.toList());
     }
-
 
     @Transactional
     @Override
@@ -401,81 +400,32 @@ public class PollServiceImpl implements PollService {
         pollDao.save(poll);
     }
 
-//    @Override
-//    public List<PollResponseDto> getAllActivePolls(String email) {
-//        List<Poll> activePolls = pollDao.findByIsActiveTrue();
-    
-//
-//        return activePolls.stream()
-////                .filter(poll -> !poll.getCreatedBy().getEmail().equals(email)) // Exclude polls created by the user
-//                .map(poll -> {
-//                    Long totalVotes = poll.getVotes() != null ? (long) poll.getVotes().size() : 0;
-//
-//                    // Map PollOptions to OptionDto
-//                    List<OptionDto> optionDtos = poll.getOptions().stream()
-//                            .map(option -> new OptionDto(option.getId(), option.getOptionText()))
-//                            .collect(Collectors.toList());
-//
-//                    return new PollResponseDto(
-//                            poll.getId(),
-//                            poll.getQuestion(),
-//                            poll.getCreatedBy().getEmail(),
-//                            poll.getExpiryDate(),
-//                            totalVotes,
-//                            poll.isAllowMultipleSelect(),
-//                            optionDtos
-//                    );
-//                })
-//                .collect(Collectors.toList());
-//    }
-    
-    
     @Override
     public List<PollResponseDto> getAllActivePolls(String email) {
         List<Poll> activePolls = pollDao.findByIsActiveTrue();
 
-        // Sort polls by createdAt in descending order
-        activePolls.sort(Comparator.comparing(Poll::getCreatedAt).reversed());
+        return activePolls.stream()
+                .filter(poll -> !poll.getCreatedBy().getEmail().equals(email)) // Exclude polls created by the user
+                .map(poll -> {
+                    Long totalVotes = poll.getVotes() != null ? (long) poll.getVotes().size() : 0;
 
-        User user = userDao.getUserbyEmail(email)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + email));
+                    // Map PollOptions to OptionDto
+                    List<OptionDto> optionDtos = poll.getOptions().stream()
+                            .map(option -> new OptionDto(option.getId(), option.getOptionText()))
+                            .collect(Collectors.toList());
 
-        return activePolls.stream().map(poll -> {
-            
-            Long totalVotes = poll.getVotes() != null ? (long) poll.getVotes().size() : 0;
-            
-            List<OptionDto> optionDtos = poll.getOptions().stream()
-                  .map(option -> new OptionDto(option.getId(), option.getOptionText()))
-                  .collect(Collectors.toList());
-            
-            PollResponseDto responseDto = new PollResponseDto();
-            responseDto.set_id(poll.getId());
-            responseDto.setQuestion(poll.getQuestion());
-            responseDto.setCreatedBy(poll.getCreatedBy().getEmail());
-            responseDto.setExpiryDate(poll.getExpiryDate());
-            responseDto.setTotalVotes(totalVotes);
-            responseDto.setAllowMultiple(poll.isAllowMultipleSelect());
-            responseDto.setOptions(optionDtos);
-            
-            // Get votes of the user for the specific poll
-            List<PollVote> votes = pollVoteDao.findByPollAndVoter(poll, user);
-            
-            boolean hasVoted = !votes.isEmpty();
-            responseDto.setUserVoted(hasVoted);
-            
-            if (hasVoted) {
-                List<OptionDto> selectedOptions = votes.stream()
-                        .map(vote -> new OptionDto(vote.getSelectedOption().getId(), vote.getSelectedOption().getOptionText()))
-                        .collect(Collectors.toList());
-                
-                responseDto.setSelectedOptions(selectedOptions);
-            }
-            
-            return responseDto;
-        }).collect(Collectors.toList());
+                    return new PollResponseDto(
+                            poll.getId(),
+                            poll.getQuestion(),
+                            poll.getCreatedBy().getEmail(),
+                            poll.getExpiryDate(),
+                            totalVotes,
+                            poll.isAllowMultipleSelect(),
+                            optionDtos
+                    );
+                })
+                .collect(Collectors.toList());
     }
-
-
 
 
     @Transactional
@@ -503,7 +453,6 @@ public class PollServiceImpl implements PollService {
                 .orElseThrow(() -> new ResourceNotFoundException("Poll not found with ID: " + updateRequest.getPollId()));
 
         boolean deleteVotes = false;
-        String oldQuestion = poll.getQuestion(); // Store the old question
 
         // ✅ Update question only if not null & changed
         if (updateRequest.getQuestion() != null && !poll.getQuestion().equals(updateRequest.getQuestion())) {
@@ -544,18 +493,17 @@ public class PollServiceImpl implements PollService {
             pollVoteDao.deleteVotesByPollId(poll.getId());
 
             for (PollVote vote : votesToDelete) {
-                String emailMessage = "Dear Voter,\n\n"
-                        + "The poll \"" + oldQuestion + "\" has been updated, and your previous votes have been removed.\n"
+            	String emailMessage = "Dear Voter,\n\n"
+                        + "The poll \"" + poll.getQuestion() + "\" has been updated, and your previous votes have been removed.\n"
                         + "Please revisit the poll to cast your vote again if needed.\n\n"
                         + "Thank you,\nPoll Management System";
 
                 // ✅ Directly using sendEmail (which is already @Async)
                 emailService.sendEmail(vote.getVoter().getEmail(), emailMessage, "Poll Update Notification");
             }
-        }
+            }
         pollDao.save(poll);
-    }
-
+        }
 
         
     

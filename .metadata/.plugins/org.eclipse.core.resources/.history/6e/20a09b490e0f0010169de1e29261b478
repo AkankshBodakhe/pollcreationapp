@@ -18,6 +18,4 @@ public class PollResponseDto {
     private Long totalVotes;
     private boolean allowMultiple;
     private List<OptionDto> options;
-    private boolean userVoted; // Flag indicating if the user has already voted
-    private List<OptionDto> selectedOptions; // Options the user has selected
 }
