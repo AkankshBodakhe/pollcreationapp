@@ -109,8 +109,5 @@ public class PollController {
         pollService.updatePoll(requestDto);
         return ResponseEntity.ok("Poll updated successfully.");
     }
-//    @GetMapping("/details")
-//    public ResponseEntity<PollDetailResponseDto> getPollDetails(@RequestParam Long pollId) {
-//        return ResponseEntity.ok(pollService.getPollDetails(pollId));
-//    }
+
 }
