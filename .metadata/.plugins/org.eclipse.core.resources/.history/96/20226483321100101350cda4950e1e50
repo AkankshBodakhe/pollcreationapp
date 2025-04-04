@@ -1,0 +1,5 @@
+package com.akanksh.config;
+
+public class SecurityConfig {
+
+}
