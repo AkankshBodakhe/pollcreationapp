@@ -1,7 +1,8 @@
 package com.akanksh.controller;
 
 import com.akanksh.dto.EmailRequest;
-import com.akanksh.service.EmailService;
+import com.akanksh.service.impl.EmailService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

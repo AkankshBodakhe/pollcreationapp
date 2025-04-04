@@ -35,49 +35,68 @@ public class PollController {
 	@Autowired
 	private PollService pollService;
 
-	@PostMapping("/create")
+	/*CREATE OPERATIONS OF POLL
+	 * 1. Create Poll 
+	 */
+	@PostMapping()
 	public ResponseEntity<CreatePollResponseDto> createPoll(@RequestBody CreatePollRequestDto requestDto) {
-		System.out.println("Into Controller with data " + requestDto);
 		return pollService.createPoll(requestDto);
 	}
 
-	@GetMapping("/user")
+	// Create Operation finished
+	
+	
+	/*READ OPERATIONS OF POLL
+	 * 1. Get poll by user : Will return the summary of all the poll created by the user.
+	 * 2. Get all active poll 
+	 * 3. Get voted polls: Will return all the polls in which user has voted in past.
+	 * 4. Get Poll Statistics : Will return the Statistics of the particular poll
+	 * 5. 
+	 * */
+	@GetMapping()
 	public ResponseEntity<List<PollSummaryDto>> getPollsByUser(@RequestParam String email) {
 		List<PollSummaryDto> pollSummaries = pollService.getPollByUser(email);
 		return ResponseEntity.ok(pollSummaries);
-	}
-
-	@GetMapping("/voted")
-	public List<VotedPollResponseDto> getVotedPolls(@RequestParam String email) {
-		return pollService.getVotedPolls(email);
-	}
-
-	@PostMapping("/vote")
-	public ResponseEntity<CastVoteResponseDto> castVote(@RequestBody CastVoteRequestDto requestDto) {
-		return pollService.castVote(requestDto);
-	}
-
-	@DeleteMapping("/delete")
-	public ResponseEntity<?> deletePoll(@RequestParam Long id) {
-		return pollService.deletePoll(id);
-	}
-
-	@GetMapping("/analysis")
-	public ResponseEntity<PollStatisticsResponseDto> getPollStatistics(@RequestParam Long pollId) {
-		return ResponseEntity.ok(pollService.getPollStatistics(pollId));
-	}
-
-	@PutMapping("/changeVote")
-	public ResponseEntity<String> changeVote(@RequestBody CastVoteRequestDto requestDto) {
-		pollService.changeVote(requestDto);
-		return ResponseEntity.ok("Vote changed successfully.");
 	}
 
 	@GetMapping("/active")
 	public List<PollResponseDto> getAllActivePolls(@RequestParam  String email) {
 		return pollService.getAllActivePolls(email);
 	}
+	
+	@GetMapping("/voted")
+	public List<VotedPollResponseDto> getVotedPolls(@RequestParam String email) {
+		return pollService.getVotedPolls(email);
+	}
+	
+	@GetMapping("/analysis")
+	public ResponseEntity<PollStatisticsResponseDto> getPollStatistics(@RequestParam Long pollId) {
+		return ResponseEntity.ok(pollService.getPollStatistics(pollId));
+	}
+	
+	// Read Operations finished
 
+	/* UPDATE OPERATIONS OF POLL
+	 * 1. Update Poll : Update the question, options or multiple select setting
+	 * 2. Update Expiry of Poll 
+	 * 3. Stop Poll :  Stop poll from taking responses from user, also make it invisible to users
+	 * 4. Resume Poll
+	 * 5. 
+	 * */
+	
+	@PutMapping()
+    public ResponseEntity<String> updatePoll(@RequestBody UpdatePollRequestDto requestDto) {
+        pollService.updatePoll(requestDto);
+        return ResponseEntity.ok("Poll updated successfully.");
+    }
+	
+	@PutMapping("/expiry/{pollId}")
+	public ResponseEntity<String> updatePollExpiry(@PathVariable Long pollId,
+			@RequestParam LocalDateTime newExpiryDate) {
+		pollService.updatePollExpiry(pollId, newExpiryDate);
+		return ResponseEntity.ok("Expiry date updated successfully for Poll ID: " + pollId);
+	}
+	
 	@PutMapping("stop/{pollId}")
 	public ResponseEntity<String> stopPoll(@PathVariable Long pollId) {
 		pollService.stopPoll(pollId);
@@ -89,25 +108,14 @@ public class PollController {
 		pollService.resumePoll(pollId);
 		return ResponseEntity.ok("Poll with ID " + pollId + " has been resumed.");
 	}
-
-	@PutMapping("/expiry/{pollId}")
-	public ResponseEntity<String> updatePollExpiry(@PathVariable Long pollId,
-			@RequestParam LocalDateTime newExpiryDate) {
-		pollService.updatePollExpiry(pollId, newExpiryDate);
-		return ResponseEntity.ok("Expiry date updated successfully for Poll ID: " + pollId);
+	
+	//  Update Operations finished
+	
+	
+	// DELETE POLL
+	@DeleteMapping()
+	public ResponseEntity<?> deletePoll(@RequestParam Long id) {
+		return pollService.deletePoll(id);
 	}
-	
-	@DeleteMapping("/deleteVote")
-    public ResponseEntity<String> deleteVote(@RequestParam Long pollId, @RequestParam String email) {
-        pollService.deleteVote(pollId, email);
-        return ResponseEntity.ok("Vote deleted successfully.");
-    }
-	
-	
-	@PutMapping("/update")
-    public ResponseEntity<String> updatePoll(@RequestBody UpdatePollRequestDto requestDto) {
-        pollService.updatePoll(requestDto);
-        return ResponseEntity.ok("Poll updated successfully.");
-    }
 
 }

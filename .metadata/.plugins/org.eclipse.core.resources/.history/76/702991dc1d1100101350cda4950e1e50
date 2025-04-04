@@ -1,0 +1,5 @@
+package com.akanksh.service.impl;
+
+public class VoteServiceImpl {
+
+}

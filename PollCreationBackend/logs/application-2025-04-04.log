@@ -1,0 +1,326 @@
+2025-04-04 12:00:23 [restartedMain] INFO  c.a.PollCreationBackendApplication - Starting PollCreationBackendApplication using Java 21.0.6 with PID 22432 (D:\PollCreationBackend\PollCreationBackend\target\classes started by Akanksh in D:\PollCreationBackend\PollCreationBackend)
+2025-04-04 12:00:23 [restartedMain] INFO  c.a.PollCreationBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-04 12:00:23 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-04 12:00:23 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-04 12:00:24 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-04 12:00:24 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 62 ms. Found 4 JPA repository interfaces.
+2025-04-04 12:00:25 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-04 12:00:25 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:00:25 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-04 12:00:25 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-04 12:00:25 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-04 12:00:25 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1754 ms
+2025-04-04 12:00:25 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-04 12:00:25 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-04 12:00:25 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-04 12:00:25 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-04 12:00:26 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-04 12:00:26 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@2a627155
+2025-04-04 12:00:26 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-04 12:00:26 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-04 12:00:27 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-04 12:00:27 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:00:28 [restartedMain] WARN  o.s.b.w.s.c.AnnotationConfigServletWebServerApplicationContext - Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'voteController': Unsatisfied dependency expressed through field 'voteService': No qualifying bean of type 'com.akanksh.service.VoteService' available: expected at least 1 bean which qualifies as autowire candidate. Dependency annotations: {@org.springframework.beans.factory.annotation.Autowired(required=true)}
+2025-04-04 12:00:28 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:00:28 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-04 12:00:28 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-04 12:00:28 [restartedMain] INFO  o.a.catalina.core.StandardService - Stopping service [Tomcat]
+2025-04-04 12:00:28 [restartedMain] INFO  o.s.b.a.l.ConditionEvaluationReportLogger - 
+
+Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-04-04 12:00:28 [restartedMain] ERROR o.s.b.d.LoggingFailureAnalysisReporter - 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Field voteService in com.akanksh.controller.VoteController required a bean of type 'com.akanksh.service.VoteService' that could not be found.
+
+The injection point has the following annotations:
+	- @org.springframework.beans.factory.annotation.Autowired(required=true)
+
+
+Action:
+
+Consider defining a bean of type 'com.akanksh.service.VoteService' in your configuration.
+
+2025-04-04 12:00:55 [restartedMain] INFO  c.a.PollCreationBackendApplication - Starting PollCreationBackendApplication using Java 21.0.6 with PID 16948 (D:\PollCreationBackend\PollCreationBackend\target\classes started by Akanksh in D:\PollCreationBackend\PollCreationBackend)
+2025-04-04 12:00:55 [restartedMain] INFO  c.a.PollCreationBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-04 12:00:55 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+2025-04-04 12:00:55 [restartedMain] INFO  o.s.b.d.e.DevToolsPropertyDefaultsPostProcessor - For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+2025-04-04 12:00:55 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-04 12:00:55 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 57 ms. Found 4 JPA repository interfaces.
+2025-04-04 12:00:56 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-04 12:00:56 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:00:56 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-04 12:00:56 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-04 12:00:56 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-04 12:00:56 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 1312 ms
+2025-04-04 12:00:56 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-04 12:00:56 [restartedMain] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.6.8.Final
+2025-04-04 12:00:56 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-04 12:00:56 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-04 12:00:56 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2025-04-04 12:00:57 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@26122587
+2025-04-04 12:00:57 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2025-04-04 12:00:57 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-1)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-04 12:00:58 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-04 12:00:58 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:00:58 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-04 12:00:58 [restartedMain] INFO  o.s.v.b.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-04-04 12:00:59 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-04 12:00:59 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:00:59 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-04 12:00:59 [restartedMain] INFO  c.a.PollCreationBackendApplication - Started PollCreationBackendApplication in 4.58 seconds (process running for 5.229)
+2025-04-04 12:03:10 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-04 12:03:10 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-04 12:03:10 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-04 12:03:11 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Received request to create poll from user: ghumarevaishnavi@gmail.com with data: CreatePollRequestDto(question=What is your profession in company??, options=[HR, developer, Devops], allowMultiple=false, expiryDateTime=2025-04-21T16:37, createdAt=2025-03-21T07:37:39.966, email=ghumarevaishnavi@gmail.com)
+2025-04-04 12:03:11 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:03:11 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Poll created successfully with ID: 8 by user: ghumarevaishnavi@gmail.com
+2025-04-04 12:03:11 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Poll options saved successfully for poll ID: 8
+2025-04-04 12:04:32 [http-nio-8080-exec-3] INFO  c.a.service.impl.PollServiceImpl - User with email 'akankshboakhe@gmail.com' is requesting poll information.
+2025-04-04 12:04:32 [http-nio-8080-exec-3] ERROR c.a.service.impl.PollServiceImpl - User not found with email: akankshboakhe@gmail.com
+2025-04-04 12:04:32 [http-nio-8080-exec-3] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.akanksh.exception.ResourceNotFoundException: User not found with email: akankshboakhe@gmail.com]
+2025-04-04 12:04:43 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - User with email 'ghumarevaishnavi@gmail.com' is requesting poll information.
+2025-04-04 12:04:43 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - User found with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:04:43 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Found 4 polls created by user with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:04:43 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 6
+2025-04-04 12:04:43 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 7
+2025-04-04 12:04:43 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 8
+2025-04-04 12:04:43 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 5
+2025-04-04 12:06:25 [http-nio-8080-exec-9] INFO  c.a.service.impl.PollServiceImpl - User with email 'ghumarevaishnavi@gmail.com' is requesting poll information.
+2025-04-04 12:06:25 [http-nio-8080-exec-9] INFO  c.a.service.impl.PollServiceImpl - User found with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:06:25 [http-nio-8080-exec-9] INFO  c.a.service.impl.PollServiceImpl - Found 4 polls created by user with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:06:26 [http-nio-8080-exec-9] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 8
+2025-04-04 12:06:26 [http-nio-8080-exec-9] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 7
+2025-04-04 12:06:26 [http-nio-8080-exec-9] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 6
+2025-04-04 12:06:26 [http-nio-8080-exec-9] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 5
+2025-04-04 12:07:22 [http-nio-8080-exec-10] INFO  c.a.service.impl.PollServiceImpl - User with email 'ghumarevaishnavi@gmail.com' is requesting poll information.
+2025-04-04 12:07:22 [http-nio-8080-exec-10] INFO  c.a.service.impl.PollServiceImpl - User found with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:07:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.PollServiceImpl - Found 4 polls created by user with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:07:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 7
+2025-04-04 12:07:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 6
+2025-04-04 12:07:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 5
+2025-04-04 12:07:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.PollServiceImpl - Returning PollSummaryDto for Poll ID: 8
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - Received request to get all active polls for user: ghumarevaishnavi@gmail.com
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - Fetched 5 active polls
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - User found: fwedqwdq with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - Poll ID: 4 has 2 total votes
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - Poll ID: 3 has 0 total votes
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - Poll ID: 1 has 3 total votes
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - Poll ID: 6 has 0 total votes
+2025-04-04 12:08:12 [http-nio-8080-exec-2] INFO  c.a.service.impl.PollServiceImpl - Poll ID: 8 has 0 total votes
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Received request to get voted polls for user: ghumarevaishnavi@gmail.com
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - User found with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Found 4 votes for user: ghumarevaishnavi@gmail.com
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Processing poll ID: 4 with question: Are u ready?
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - User voted on 2 options for poll ID: 4
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Processing poll ID: 1 with question: Are u ready?
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - User voted on 2 options for poll ID: 1
+2025-04-04 12:08:59 [http-nio-8080-exec-1] INFO  c.a.service.impl.PollServiceImpl - Returning 2 voted polls for user: ghumarevaishnavi@gmail.com
+2025-04-04 12:10:15 [http-nio-8080-exec-3] INFO  c.a.service.impl.PollServiceImpl - Received request to get statistics for Poll with ID: 19
+2025-04-04 12:10:15 [http-nio-8080-exec-3] WARN  c.a.service.impl.PollServiceImpl - Poll not found with ID: 19
+2025-04-04 12:10:15 [http-nio-8080-exec-3] WARN  c.a.service.impl.PollServiceImpl - Error occurred while fetching statistics for Poll ID: 19: Poll not found with ID: 19
+2025-04-04 12:10:15 [http-nio-8080-exec-3] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.akanksh.exception.ResourceNotFoundException: Poll not found with ID: 19]
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Received request to get statistics for Poll with ID: 4
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Poll found: 4 with question: Are u ready?
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Total votes for Poll ID: 4: 2
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Option ID: 12 has 1 votes
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Option ID: 13 has 1 votes
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Option ID: 14 has 0 votes
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Poll ID: 4 is currently active
+2025-04-04 12:10:27 [http-nio-8080-exec-7] INFO  c.a.service.impl.PollServiceImpl - Successfully fetched poll statistics for Poll ID: 4
+2025-04-04 12:13:19 [http-nio-8080-exec-8] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [org.springframework.web.servlet.resource.NoResourceFoundException: No static resource polls/vote.]
+2025-04-04 12:13:38 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - Received request to cast vote from user: ghumarevaishnavi@gmail.com with data: CastVoteRequestDto(pollId=8, optionIds=[28, 29], voterEmail=ghumarevaishnavi@gmail.com)
+2025-04-04 12:13:38 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - Poll found with ID: 8. Expiry Date: 2025-04-21T16:37
+2025-04-04 12:13:38 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com. Checking vote conditions...
+2025-04-04 12:13:38 [http-nio-8080-exec-2] WARN  c.a.service.impl.VoteServiceImpl - User ghumarevaishnavi@gmail.com attempted multiple selection in a single-select poll with ID: 8
+2025-04-04 12:13:45 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - Received request to cast vote from user: ghumarevaishnavi@gmail.com with data: CastVoteRequestDto(pollId=8, optionIds=[28], voterEmail=ghumarevaishnavi@gmail.com)
+2025-04-04 12:13:45 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - Poll found with ID: 8. Expiry Date: 2025-04-21T16:37
+2025-04-04 12:13:45 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com. Checking vote conditions...
+2025-04-04 12:13:45 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - Vote cast for option ID: 28 in poll ID: 8 by user: ghumarevaishnavi@gmail.com
+2025-04-04 12:13:45 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - Votes successfully cast for poll ID: 8
+2025-04-04 12:14:01 [http-nio-8080-exec-5] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavib@gmail.com on poll ID: 8
+2025-04-04 12:14:01 [http-nio-8080-exec-5] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavib@gmail.com
+2025-04-04 12:14:01 [http-nio-8080-exec-5] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:14:01 [http-nio-8080-exec-5] ERROR c.a.service.impl.VoteServiceImpl - User: ghumarevaishnavib@gmail.com has not voted in Poll ID: 8
+2025-04-04 12:14:01 [http-nio-8080-exec-5] ERROR c.a.service.impl.VoteServiceImpl - Invalid state or argument while changing vote: User has not voted in this poll.
+2025-04-04 12:14:01 [http-nio-8080-exec-5] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: User has not voted in this poll.]
+2025-04-04 12:14:12 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavi@gmail.com on poll ID: 8
+2025-04-04 12:14:12 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:14:12 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:14:12 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - User has existing votes in Poll ID: 8. Proceeding to validate new votes.
+2025-04-04 12:14:12 [http-nio-8080-exec-7] WARN  c.a.service.impl.VoteServiceImpl - Error occurred while changing vote: Option not found with ID: 6
+2025-04-04 12:14:12 [http-nio-8080-exec-7] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [com.akanksh.exception.ResourceNotFoundException: Option not found with ID: 6]
+2025-04-04 12:14:25 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavi@gmail.com on poll ID: 8
+2025-04-04 12:14:25 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:14:25 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:14:25 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - User has existing votes in Poll ID: 8. Proceeding to validate new votes.
+2025-04-04 12:14:25 [http-nio-8080-exec-6] ERROR c.a.service.impl.VoteServiceImpl - One or more selected options do not belong to Poll ID: 8
+2025-04-04 12:14:25 [http-nio-8080-exec-6] ERROR c.a.service.impl.VoteServiceImpl - Invalid state or argument while changing vote: One or more options do not belong to the given poll.
+2025-04-04 12:14:25 [http-nio-8080-exec-6] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalArgumentException: One or more options do not belong to the given poll.]
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavi@gmail.com on poll ID: 8
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - User has existing votes in Poll ID: 8. Proceeding to validate new votes.
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - Deleting existing votes for user: ghumarevaishnavi@gmail.com on Poll ID: 8
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - Registering new votes for user: ghumarevaishnavi@gmail.com on Poll ID: 8
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - New vote registered for user: ghumarevaishnavi@gmail.com on option ID: 28
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - New vote registered for user: ghumarevaishnavi@gmail.com on option ID: 29
+2025-04-04 12:14:36 [http-nio-8080-exec-8] INFO  c.a.service.impl.VoteServiceImpl - Vote change successfully completed for user: ghumarevaishnavi@gmail.com on Poll ID: 8
+2025-04-04 12:18:03 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-04-04 12:18:03 [Thread-5] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-04 12:18:03 [tomcat-shutdown] INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:18:03 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-04 12:18:03 [Thread-5] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:18:03 [Thread-5] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:18:03 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2025-04-04 12:18:03 [Thread-5] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2025-04-04 12:18:03 [restartedMain] INFO  c.a.PollCreationBackendApplication - Starting PollCreationBackendApplication using Java 21.0.6 with PID 16948 (D:\PollCreationBackend\PollCreationBackend\target\classes started by Akanksh in D:\PollCreationBackend\PollCreationBackend)
+2025-04-04 12:18:03 [restartedMain] INFO  c.a.PollCreationBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-04 12:18:03 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-04 12:18:03 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 4 JPA repository interfaces.
+2025-04-04 12:18:03 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-04 12:18:03 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:18:03 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-04 12:18:03 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-04 12:18:03 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-04 12:18:03 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 294 ms
+2025-04-04 12:18:03 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-04 12:18:03 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-04 12:18:03 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-04 12:18:03 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Starting...
+2025-04-04 12:18:03 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-2 - Added connection com.mysql.cj.jdbc.ConnectionImpl@4b7953e6
+2025-04-04 12:18:03 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Start completed.
+2025-04-04 12:18:03 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-2)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-04 12:18:03 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-04 12:18:03 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:18:03 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-04 12:18:03 [restartedMain] INFO  o.s.v.b.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-04-04 12:18:04 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-04 12:18:04 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:18:04 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-04 12:18:04 [restartedMain] INFO  c.a.PollCreationBackendApplication - Started PollCreationBackendApplication in 0.848 seconds (process running for 1030.113)
+2025-04-04 12:18:04 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-04-04 12:19:20 [File Watcher] INFO  o.s.b.d.a.LocalDevToolsAutoConfiguration$RestartingClassPathChangeChangedEventListener - Restarting due to 1 class path change (0 additions, 0 deletions, 1 modification)
+2025-04-04 12:19:20 [Thread-7] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-04 12:19:20 [tomcat-shutdown] INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:19:20 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-04 12:19:20 [Thread-7] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:19:20 [Thread-7] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:19:20 [Thread-7] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown initiated...
+2025-04-04 12:19:20 [Thread-7] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-2 - Shutdown completed.
+2025-04-04 12:19:20 [restartedMain] INFO  c.a.PollCreationBackendApplication - Starting PollCreationBackendApplication using Java 21.0.6 with PID 16948 (D:\PollCreationBackend\PollCreationBackend\target\classes started by Akanksh in D:\PollCreationBackend\PollCreationBackend)
+2025-04-04 12:19:20 [restartedMain] INFO  c.a.PollCreationBackendApplication - No active profile set, falling back to 1 default profile: "default"
+2025-04-04 12:19:20 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-04-04 12:19:20 [restartedMain] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 15 ms. Found 4 JPA repository interfaces.
+2025-04-04 12:19:20 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2025-04-04 12:19:20 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:19:20 [restartedMain] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2025-04-04 12:19:20 [restartedMain] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.36]
+2025-04-04 12:19:20 [restartedMain] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2025-04-04 12:19:20 [restartedMain] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 293 ms
+2025-04-04 12:19:20 [restartedMain] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-04-04 12:19:20 [restartedMain] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2025-04-04 12:19:20 [restartedMain] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-04-04 12:19:20 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Starting...
+2025-04-04 12:19:20 [restartedMain] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-3 - Added connection com.mysql.cj.jdbc.ConnectionImpl@61ced93b
+2025-04-04 12:19:20 [restartedMain] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Start completed.
+2025-04-04 12:19:20 [restartedMain] INFO  o.hibernate.orm.connections.pooling - HHH10001005: Database info:
+	Database JDBC URL [Connecting through datasource 'HikariDataSource (HikariPool-3)']
+	Database driver: undefined/unknown
+	Database version: 8.0.41
+	Autocommit mode: undefined/unknown
+	Isolation level: undefined/unknown
+	Minimum pool size: undefined/unknown
+	Maximum pool size: undefined/unknown
+2025-04-04 12:19:20 [restartedMain] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-04-04 12:19:20 [restartedMain] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:19:20 [restartedMain] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-04-04 12:19:20 [restartedMain] INFO  o.s.v.b.OptionalValidatorFactoryBean - Failed to set up a Bean Validation provider: jakarta.validation.NoProviderFoundException: Unable to create a Configuration, because no Jakarta Bean Validation provider could be found. Add a provider like Hibernate Validator (RI) to your classpath.
+2025-04-04 12:19:21 [restartedMain] INFO  o.s.b.d.a.OptionalLiveReloadServer - LiveReload server is running on port 35729
+2025-04-04 12:19:21 [restartedMain] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:19:21 [restartedMain] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2025-04-04 12:19:21 [restartedMain] INFO  c.a.PollCreationBackendApplication - Started PollCreationBackendApplication in 0.806 seconds (process running for 1107.116)
+2025-04-04 12:19:21 [restartedMain] INFO  o.s.b.d.a.ConditionEvaluationDeltaLoggingListener - Condition evaluation unchanged
+2025-04-04 12:19:43 [http-nio-8080-exec-3] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-04-04 12:19:43 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2025-04-04 12:19:43 [http-nio-8080-exec-3] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2025-04-04 12:19:43 [http-nio-8080-exec-3] INFO  c.a.service.impl.VoteServiceImpl - Received request to cast vote from user: ghumarevaishnavi@gmail.com with data: CastVoteRequestDto(pollId=8, optionIds=[8], voterEmail=ghumarevaishnavi@gmail.com)
+2025-04-04 12:19:43 [http-nio-8080-exec-3] INFO  c.a.service.impl.VoteServiceImpl - Poll found with ID: 8. Expiry Date: 2025-04-21T16:37
+2025-04-04 12:19:43 [http-nio-8080-exec-3] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com. Checking vote conditions...
+2025-04-04 12:19:43 [http-nio-8080-exec-3] WARN  c.a.service.impl.VoteServiceImpl - Option id and poll id mismatch for poll ID: 8
+2025-04-04 12:19:51 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - Received request to cast vote from user: ghumarevaishnavi@gmail.com with data: CastVoteRequestDto(pollId=8, optionIds=[28, 29], voterEmail=ghumarevaishnavi@gmail.com)
+2025-04-04 12:19:51 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - Poll found with ID: 8. Expiry Date: 2025-04-21T16:37
+2025-04-04 12:19:51 [http-nio-8080-exec-4] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com. Checking vote conditions...
+2025-04-04 12:19:51 [http-nio-8080-exec-4] WARN  c.a.service.impl.VoteServiceImpl - User ghumarevaishnavi@gmail.com attempted multiple selection in a single-select poll with ID: 8
+2025-04-04 12:19:55 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Received request to cast vote from user: ghumarevaishnavi@gmail.com with data: CastVoteRequestDto(pollId=8, optionIds=[29], voterEmail=ghumarevaishnavi@gmail.com)
+2025-04-04 12:19:55 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Poll found with ID: 8. Expiry Date: 2025-04-21T16:37
+2025-04-04 12:19:55 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com. Checking vote conditions...
+2025-04-04 12:19:55 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Vote cast for option ID: 29 in poll ID: 8 by user: ghumarevaishnavi@gmail.com
+2025-04-04 12:19:55 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Votes successfully cast for poll ID: 8
+2025-04-04 12:20:00 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavi@gmail.com on poll ID: 8
+2025-04-04 12:20:00 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:20:00 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:20:00 [http-nio-8080-exec-6] INFO  c.a.service.impl.VoteServiceImpl - User has existing votes in Poll ID: 8. Proceeding to validate new votes.
+2025-04-04 12:20:00 [http-nio-8080-exec-6] ERROR c.a.service.impl.VoteServiceImpl - Poll ID: 8 does not allow multiple selections, but multiple options were selected.
+2025-04-04 12:20:00 [http-nio-8080-exec-6] ERROR c.a.service.impl.VoteServiceImpl - Invalid state or argument while changing vote: This poll does not allow multiple selections.
+2025-04-04 12:20:00 [http-nio-8080-exec-6] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalArgumentException: This poll does not allow multiple selections.]
+2025-04-04 12:20:14 [http-nio-8080-exec-9] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavi@gmail.com on poll ID: 8
+2025-04-04 12:20:14 [http-nio-8080-exec-9] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:20:14 [http-nio-8080-exec-9] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:20:14 [http-nio-8080-exec-9] INFO  c.a.service.impl.VoteServiceImpl - User has existing votes in Poll ID: 8. Proceeding to validate new votes.
+2025-04-04 12:20:14 [http-nio-8080-exec-9] INFO  c.a.service.impl.VoteServiceImpl - User has selected the same options. No changes detected.
+2025-04-04 12:20:14 [http-nio-8080-exec-9] ERROR c.a.service.impl.VoteServiceImpl - Invalid state or argument while changing vote: Cannot change vote to the same vote. No changes detected.
+2025-04-04 12:20:14 [http-nio-8080-exec-9] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalStateException: Cannot change vote to the same vote. No changes detected.]
+2025-04-04 12:20:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavi@gmail.com on poll ID: 8
+2025-04-04 12:20:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:20:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:20:23 [http-nio-8080-exec-10] INFO  c.a.service.impl.VoteServiceImpl - User has existing votes in Poll ID: 8. Proceeding to validate new votes.
+2025-04-04 12:20:23 [http-nio-8080-exec-10] ERROR c.a.service.impl.VoteServiceImpl - One or more selected options do not belong to Poll ID: 8
+2025-04-04 12:20:23 [http-nio-8080-exec-10] ERROR c.a.service.impl.VoteServiceImpl - Invalid state or argument while changing vote: One or more options do not belong to the given poll.
+2025-04-04 12:20:23 [http-nio-8080-exec-10] WARN  o.s.w.s.m.m.a.ExceptionHandlerExceptionResolver - Resolved [java.lang.IllegalArgumentException: One or more options do not belong to the given poll.]
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - Received request to change vote for user: ghumarevaishnavi@gmail.com on poll ID: 8
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - User found: ghumarevaishnavi@gmail.com
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - User has existing votes in Poll ID: 8. Proceeding to validate new votes.
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - Deleting existing votes for user: ghumarevaishnavi@gmail.com on Poll ID: 8
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - Registering new votes for user: ghumarevaishnavi@gmail.com on Poll ID: 8
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - New vote registered for user: ghumarevaishnavi@gmail.com on option ID: 30
+2025-04-04 12:20:30 [http-nio-8080-exec-2] INFO  c.a.service.impl.VoteServiceImpl - Vote change successfully completed for user: ghumarevaishnavi@gmail.com on Poll ID: 8
+2025-04-04 12:21:52 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Received request to delete vote for Poll ID: 8 by user: ghumarevaishnavi@gmail.com
+2025-04-04 12:21:52 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - User found: fwedqwdq with email: ghumarevaishnavi@gmail.com
+2025-04-04 12:21:52 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Poll found: 8 with question: What is your profession in company??
+2025-04-04 12:21:52 [http-nio-8080-exec-7] INFO  c.a.service.impl.VoteServiceImpl - Vote deleted for Poll ID: 8 by user: ghumarevaishnavi@gmail.com
+2025-04-04 12:58:54 [RMI TCP Connection(65)-127.0.0.1] INFO  o.s.b.a.SpringApplicationAdminMXBeanRegistrar$SpringApplicationAdmin - Application shutdown requested.
+2025-04-04 12:58:54 [RMI TCP Connection(65)-127.0.0.1] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Commencing graceful shutdown. Waiting for active requests to complete
+2025-04-04 12:58:54 [tomcat-shutdown] INFO  o.a.coyote.http11.Http11NioProtocol - Pausing ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:58:54 [tomcat-shutdown] INFO  o.s.b.w.e.tomcat.GracefulShutdown - Graceful shutdown complete
+2025-04-04 12:58:54 [RMI TCP Connection(65)-127.0.0.1] INFO  o.a.coyote.http11.Http11NioProtocol - Stopping ProtocolHandler ["http-nio-8080"]
+2025-04-04 12:58:54 [RMI TCP Connection(65)-127.0.0.1] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-04-04 12:58:54 [RMI TCP Connection(65)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown initiated...
+2025-04-04 12:58:54 [RMI TCP Connection(65)-127.0.0.1] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-3 - Shutdown completed.

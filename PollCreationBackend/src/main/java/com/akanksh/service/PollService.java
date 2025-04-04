@@ -20,14 +20,10 @@ public interface PollService {
 	ResponseEntity<CreatePollResponseDto> createPoll(CreatePollRequestDto requestDto);
 
 	List<PollSummaryDto> getPollByUser(String email);
-	
-    ResponseEntity<CastVoteResponseDto> castVote(CastVoteRequestDto requestDto);
 
 	ResponseEntity<?> deletePoll(Long id);
 
 	PollStatisticsResponseDto getPollStatistics(Long pollId);
-//
-//	PollDetailResponseDto getPollDetails(Long pollId);
 
 	List<PollResponseDto> getAllActivePolls(String email);
 
@@ -39,10 +35,6 @@ public interface PollService {
 
 	void updatePollExpiry(Long pollId, LocalDateTime newExpiryDate);
 
-	void changeVote(CastVoteRequestDto requestDto);
-
-	void deleteVote(Long pollId, String voterEmail);
-
 	void updatePoll(UpdatePollRequestDto updateRequest);
-	
+
 }

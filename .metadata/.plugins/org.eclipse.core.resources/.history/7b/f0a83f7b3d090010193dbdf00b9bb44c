@@ -1,8 +1,0 @@
-package com.akanksh.dto;
-
-public class Snippet {
-	public static void main(String[] args) {
-		CreatorDto
-	}
-}
-
